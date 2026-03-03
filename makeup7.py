@@ -216,15 +216,37 @@ def rename_files(folder_path):
         counter += 1
     print("Files have been renamed in numerical order.")
 
-def convert_to_bin(temp_dir, output_dir):
+def convert_to_bin(temp_dir):
     preprocess_utils = Preprocess_Utils() 
     # Iterate through all image files in the input folder and process each one
     for filename in os.listdir(temp_dir):
         if filename.lower().endswith('.jpg'):
             image_path = os.path.join(temp_dir, filename)
-            preprocess_utils.convert_and_save_image_binary(image_path, output_dir)
+            preprocess_utils.convert_and_save_image_binary(image_path, temp_dir)
     print(".bin files created")
 
+def combine_bin(temp_dir, output_dir):
+    output_file = 'output.bin'  # name of the final combined file
+    output_folder = os.path.join(output_dir, "00001")
+    output_path = os.path.join(output_folder, output_file)
+
+    # Get all subfolders that are numeric
+    subfolders = [f for f in os.listdir(temp_dir) if f.isdigit()]
+    subfolders.sort(key=int)  # sort numerically
+
+    os.makedirs(output_folder, exist_ok=True)
+
+    with open(output_path, 'wb') as outfile:
+        for folder in subfolders:
+            bin_path = os.path.join(temp_dir, folder, 'output.bin')
+            if os.path.exists(bin_path):
+                with open(bin_path, 'rb') as f:
+                    data = f.read()
+                    outfile.write(data)
+            else:
+                print(f"Warning: {bin_path} does not exist.")
+
+    print(f"Combined {len(subfolders)} folders into {output_path}")
 
 
 def main():
@@ -235,6 +257,7 @@ def main():
     parser.add_argument("--rotate_images", type=str)
     parser.add_argument("--rename_files", type=str)
     parser.add_argument("--convert_to_bin", type=str)
+    parser.add_argument("--combine_bin", type=str)
     parser.add_argument("--all", type=str)
 
     args = parser.parse_args()
@@ -248,7 +271,8 @@ def main():
         drop_frames(temp_dir, int(interval))
         rotate_images(temp_dir)
         rename_files(temp_dir)
-        convert_to_bin(temp_dir, output_dir)
+        convert_to_bin(temp_dir)
+        combine_bin(temp_dir, output_dir)
         return
 
     if args.extract_video:
@@ -271,10 +295,11 @@ def main():
         rename_files(args.rename_files)
 
     if args.convert_to_bin:
-        temp_dir, output_dir = args.convert_to_bin.split(",")
-        #temp_dir = f'"{temp_dir}"'
-        #output_dir = f'"{output_dir}"'
-        convert_to_bin(temp_dir, output_dir)
+        convert_to_bin(args.convert_to_bin)
+    
+    if args.combine_bin:
+        temp_dir, output_dir = args.combine_bin.split(",")
+        combine_bin(temp_dir, output_dir)
 
 if __name__ == "__main__":
     print("Running...")

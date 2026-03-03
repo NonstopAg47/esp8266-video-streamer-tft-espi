@@ -46,7 +46,7 @@ WiFiClient wifiClient;
 
 
 const uint16_t width = 128;
-const uint16_t linesPerChunk = 14; // read 14 lines at once (128x14) (1792 pixels)
+const uint16_t linesPerChunk = 160; // read linesPerChunk lines at once (128xlinesPerChunk)  //should be divisible by 160 and <= 160
 // Buffers to hold linesPerChunk lines at a time
 uint8_t buf[width * 2 * linesPerChunk];       // raw bytes
 
@@ -132,10 +132,12 @@ void DispImage(const char* baseUrl) {
 
   
   uint16_t linesRead = 0;
+  uint16_t y_coord = 0;
+  uint16_t frame_count = 0;
 
   while (linesRead < totalLines) {
     // Determine how many lines to read in this chunk (last chunk may be less than 4)
-    uint16_t linesThisChunk = min(linesPerChunk, (uint16_t)(totalLines - linesRead));
+    uint16_t linesThisChunk = min(linesPerChunk, (uint16_t)(totalLines - linesRead));  //uint16_t linesThisChunk = linesPerChunk; mayb
     uint32_t bytesToRead = linesThisChunk * width * 2;
     uint32_t bytesRead = 0;
     uint32_t startTime = millis();
@@ -155,9 +157,12 @@ void DispImage(const char* baseUrl) {
     }
 
 
-    tft.pushImage(0, linesRead, width, linesThisChunk, (uint16_t*)buf);
+    tft.pushImage(0, y_coord, width, linesThisChunk, (uint16_t*)buf);  //mayb tft.pushImage(0, 0, width, linesThisChunk, (uint16_t*)buf);
+    //if linesPerChunk = 160;
 
     linesRead += linesThisChunk;
+    linesRead % 160 == 0 ? y_coord = 0, frame_count++ : y_coord += linesThisChunk;
+    print("lines read: ");print(linesRead);print("   frame no: ");println(frame_count);
   }
   http.end();
 }

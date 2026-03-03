@@ -54,9 +54,7 @@ your preferred server
 
 
 ## To do
-.zip or no ?
+//compression over wifi
 //ESP8266 needs periodic yield to prevent watchdog resets.
 //Combine all frames into ONE large binary file and stream continuously.
-//Optimize this for maximum FPS
-//Convert it into a real streaming video player
-//get rid of unnecessary code
+//reduce number of lines/operations of code
