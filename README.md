@@ -56,7 +56,6 @@ your preferred server
 ## To do
 .zip or no ?
 //ESP8266 needs periodic yield to prevent watchdog resets.
-//Move HTTPClient http; inside DispImage() and reuse connection properly
 //Combine all frames into ONE large binary file and stream continuously.
 //Optimize this for maximum FPS
 //Convert it into a real streaming video player
