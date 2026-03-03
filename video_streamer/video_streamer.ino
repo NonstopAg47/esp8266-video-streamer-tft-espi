@@ -5,7 +5,7 @@
 const char* ssid = "SSID";
 const char* password = "PASSWORD";
 const char* ipconfig = "192.168.1.3";  //check in cmd -> ipconfig  // server url
-const uint16_t NumOfFiles = 52;
+const uint16_t NumOfFiles = 52;  //number of frames
 #define SerialDebug  //comment out this line to disable serial monitor
 */
 #include "config.h"
@@ -45,7 +45,6 @@ WiFiClient wifiClient;
 
 
 
-//global allocation to avoid reallocating each time
 const uint16_t width = 128;
 const uint16_t linesPerChunk = 14; // read 14 lines at once (128x14) (1792 pixels)
 // Buffers to hold linesPerChunk lines at a time
@@ -100,14 +99,14 @@ void loop() {
   digitalWrite(LED_BUILTIN, LOW);  // Turn the LED on (Note that LOW is the voltage level
   // but actually the LED is on; this is because
   // it is active low on the ESP-01)
-  delay(500);                      // Wait for a second
+  delay(500);                      // Wait for 500 ms
   digitalWrite(LED_BUILTIN, HIGH);  // Turn the LED off by making the voltage HIGH
-  delay(500);                      // Wait for two seconds (to demonstrate the active low LED)
+  delay(500);                      // Wait for 500 ms (to demonstrate the active low LED)
 }
 
-// Display a full image by fetching multiple .bin files
+// Display a full image by fetching .bin file
 void DispImage(const char* baseUrl) {
-  char url[70];  // adjust size as needed
+  char url[65];  // adjust size as needed
   sprintf(url, "%s/output.bin", baseUrl);
 
   // Optimized function to read a .bin file and display linesPerChunk lines at a time
@@ -122,11 +121,11 @@ void DispImage(const char* baseUrl) {
   }
 
   int contentLength = http.getSize();  //total num of bytes in chunk //2 bytes per pixel
-  if (contentLength <= 0) {
-    println("Empty file: " + String(url));
-    http.end();
-    return;
-  }
+  //if (contentLength <= 0) {
+  //  println("Empty file: " + String(url));
+  //  http.end();
+  //  return;
+  //}
 
   WiFiClient* stream = http.getStreamPtr();
   uint16_t totalLines = contentLength / (2 * width);
@@ -155,19 +154,6 @@ void DispImage(const char* baseUrl) {
       }
     }
 
-    /*
-    // Convert raw bytes to 16-bit color values
-    for (uint16_t line = 0; line < linesThisChunk; line++) {
-      for (uint16_t x = 0; x < width; x++) {
-        //for rgb for display with black tab
-        //lineBuffer[line * width + x] = (buf[(line * width + x) * 2] << 8) | buf[(line * width + x) * 2 + 1];
-
-        //for bgr for display with green tab
-        uint16_t pixel = (buf[(line * width + x) * 2] << 8) | buf[(line * width + x) * 2 + 1];
-        lineBuffer[line * width + x] = ((pixel & 0x001F) << 11) | (pixel & 0x07E0) | ((pixel & 0xF800) >> 11);
-      }
-    }
-    */
 
     tft.pushImage(0, linesRead, width, linesThisChunk, (uint16_t*)buf);
 
