@@ -50,11 +50,3 @@ your preferred server
 >
 > URL in `video_streamer/video_streamer.ino` follows the format `http://domain-url/testingimage/00001"`. Ensure folder name matches in server or modify the format
 
-
-
-
-## To do
-//compression over wifi
-//ESP8266 needs periodic yield to prevent watchdog resets.
-//Combine all frames into ONE large binary file and stream continuously.
-//reduce number of lines/operations of code
