@@ -1,5 +1,5 @@
-# title
-#### desc
+# ESP8266 - Wi-Fi to TFT OLED ST7735 Video Streamer (TFT_eSPI)
+#### Program runs on an ESP8266 and streams images over Wi-Fi from a server to a 1.8" TFT OLED ST7735 screen. I streamed over wifi because ram and flash is limited and I didnt bother buying an sd card reader.
 ## SETUP
 * Install [XAMPP 8.0.25](https://sourceforge.net/projects/xampp/files/XAMPP%20Windows/8.0.25/) or 
 your preferred server
@@ -19,11 +19,11 @@ your preferred server
 * Arduino IDE -> Tools -> CPU Frequency -> 160 MHz
 
 * Arduino IDE -> Sketch -> Include Libraries -> Manage Libraries ->
-	* Install TFT_eSPI by Bodmer
+	* Install `TFT_eSPI by Bodmer`
 
 * Arduino IDE -> File -> Preferences -> Sketchbook location -> Go to that directory -> libraries ->
-	* TFT_eSPI -> Replace User_Setup_Select.h
-	* Add TFT_eSPI_NonstopAG47_Setups/ inside libraries
+	* TFT_eSPI -> Replace `User_Setup_Select.h`
+	* Add `TFT_eSPI_NonstopAG47_Setups/` inside libraries
 
 * Setup and activate env if preferred
 
@@ -37,7 +37,7 @@ your preferred server
 
 * Configure `video_streamer/config.h`
 
-* Run 'video_streamer/video_streamer.ino'
+* Run `video_streamer/video_streamer.ino`
 
 ## NOTE
 > I use git bash on windows to run .sh
