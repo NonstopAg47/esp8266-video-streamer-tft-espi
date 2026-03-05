@@ -16,7 +16,7 @@
 // Display BLK       to NodeMCU pin VIN
 // For NodeMCU - use pin numbers in the form PIN_Dx where Dx is the NodeMCU pin designation
 // Refer User_Setup_select.h
-#define TFT_CS   PIN_D9  // Chip select control pin RX
+#define TFT_CS   PIN_D8  // Chip select control pin RX
 #define TFT_DC   PIN_D4  // Data Command control pin
 #define TFT_RST  PIN_D2  // Reset pin 
 //#define TFT_RST  -1  // Set TFT_RST to -1 if the display RESET is connected to NodeMCU RST or 3.3V
