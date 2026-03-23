@@ -31,7 +31,7 @@ your preferred server
 ### PREPROCESSING
 * Run `./preprocess.sh "path_to_input_video" "path_to_temp_dir" "interval" "path_to_output_dir"`
 
-    * Eg: `./preprocess.sh "C:/Users/Desktop/ironman.mp4" "C:/Users/Desktop/temp_dir" "20" "C:/Users/xampp/htdocs/testingimage/"`
+    * Eg: `./preprocess.sh "C:/Users/Desktop/project/ironman.mp4" "C:/Users/Desktop/project/temp_dir" "20" "C:/Users/xampp/htdocs/testingimage/"`
 
 * Run XAMPP Apache Server or your preferred server
 
