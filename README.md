@@ -35,7 +35,7 @@ your preferred server
 
 * Run XAMPP Apache Server or your preferred server
 
-* Configure `video_streamer/config.h`
+* Configure `video_streamer/config.h` (refer `video_streamer/video_streamer.ino`)
 
 * Run `video_streamer/video_streamer.ino`
 
